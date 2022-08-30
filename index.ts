@@ -4,8 +4,6 @@ import { getLoader, getMappings, getQFAPI } from "./versions";
 import { error, success } from "./logger";
 import { readFile, writeFile } from "fs/promises";
 
-import { exec } from "@actions/exec";
-
 interface VersionsTOML {
   versions: { [key: string]: string };
   libraries: {
@@ -27,50 +25,38 @@ interface VersionsTOML {
     if (libObj.module === "org.quiltmc:quilt-mappings") {
       const mappings = await getMappings(mcVersion);
 
-      if (mappings) {
-        if (typeof libObj.version === "string") {
-          original.libraries[lib].version = mappings;
-        } else {
-          // @ts-expect-error typescript did a oopsie here
-          original.versions[original.libraries[lib].version.ref] = mappings;
-        }
-
-        success(`Updated Quilt Mappings to ${mappings}`);
+      if (typeof libObj.version === "string") {
+        original.libraries[lib].version = mappings;
       } else {
-        error("Failed to retrieve latest mapping version!");
+        // @ts-expect-error typescript did a oopsie here
+        original.versions[original.libraries[lib].version.ref] = mappings;
       }
+
+      success(`Updated Quilt Mappings to ${mappings}`);
     } else if (libObj.module === "org.quiltmc:quilt-loader") {
       const loader = await getLoader(mcVersion);
 
-      if (loader) {
-        if (typeof libObj.version === "string") {
-          original.libraries[lib].version = loader;
-        } else {
-          // @ts-expect-error typescript did a oopsie here
-          original.versions[original.libraries[lib].version.ref] = loader;
-        }
-
-        success(`Updated Quilt Loader to ${loader}`);
+      if (typeof libObj.version === "string") {
+        original.libraries[lib].version = loader;
       } else {
-        error("Failed to retrieve latest loader version!");
+        // @ts-expect-error typescript did a oopsie here
+        original.versions[original.libraries[lib].version.ref] = loader;
       }
+
+      success(`Updated Quilt Loader to ${loader}`);
     } else if (
       libObj.module === "org.quiltmc.quilted-fabric-api:quilted-fabric-api"
     ) {
       const qfapi = await getQFAPI(mcVersion);
 
-      if (qfapi) {
-        if (typeof libObj.version === "string") {
-          original.libraries[lib].version = qfapi;
-        } else {
-          // @ts-expect-error typescript did a oopsie here
-          original.versions[original.libraries[lib].version.ref] = qfapi;
-        }
-
-        success(`Updated Quilted Fabric API to ${qfapi}`);
+      if (typeof libObj.version === "string") {
+        original.libraries[lib].version = qfapi;
       } else {
-        error("Failed to retrieve latest QFAPI version!");
+        // @ts-expect-error typescript did a oopsie here
+        original.versions[original.libraries[lib].version.ref] = qfapi;
       }
+
+      success(`Updated Quilted Fabric API to ${qfapi}`);
     }
   }
 
@@ -79,6 +65,6 @@ interface VersionsTOML {
     `${stringify(original as unknown as JsonMap)}\n`,
   );
 })().catch((e) => {
-  console.error(e);
+  error(e);
   process.exit(1);
 });
