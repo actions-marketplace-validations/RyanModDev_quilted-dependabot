@@ -1,0 +1,19 @@
+name: 'Quilted Dependabot'
+description: 'Update certain dependencies for Quilt'
+author: 'ryanccn'
+
+branding:
+  color: blue
+  icon: upload-cloud
+
+inputs:
+outputs:
+
+runs:
+  using: "composite"
+  steps:
+    - uses: denoland/setup-deno@v1
+      with:
+        deno-version: v1.x
+    - run: deno run -A mod.ts
+      shell: bash
