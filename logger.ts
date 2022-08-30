@@ -1,4 +1,4 @@
-import { bold, green, red } from "https://deno.land/std@0.153.0/fmt/colors.ts";
+import { bold, green, red } from "kleur";
 
 export const success = (a: string) => {
   console.log(bold(green("✔")) + " " + a);

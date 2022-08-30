@@ -7,10 +7,5 @@ branding:
   icon: upload-cloud
 
 runs:
-  using: "composite"
-  steps:
-    - uses: denoland/setup-deno@v1
-      with:
-        deno-version: v1.x
-    - run: deno run -A ${{ github.action_path }}/mod.ts
-      shell: bash
+  using: 'node18'
+  main: 'dist/index.js'

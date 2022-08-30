@@ -1,4 +1,4 @@
-import { parse } from "https://deno.land/x/xml@2.0.4/mod.ts";
+import { XMLParser } from "fast-xml-parser";
 
 type MappingsResponse = {
   gameVersion: string;
@@ -64,7 +64,7 @@ export const getQFAPI = async (v: string) => {
   }
 
   const mavenxml = await (res.text() as Promise<string>).then((b) => {
-    return parse(b) as unknown as MavenXML;
+    return new XMLParser().parse(b) as unknown as MavenXML;
   });
 
   const goodVersions = mavenxml.metadata.versioning.versions.version.filter(
