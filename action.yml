@@ -7,10 +7,5 @@ branding:
   icon: upload-cloud
 
 runs:
-  using: "composite"
-  steps:
-    - uses: denoland/setup-deno@v1
-      with:
-        deno-version: v1.x
-    - run: deno run -A mod.ts
-      shell: bash
+  using: 'docker'
+  image: 'Dockerfile'
