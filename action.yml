@@ -6,9 +6,6 @@ branding:
   color: blue
   icon: upload-cloud
 
-inputs:
-outputs:
-
 runs:
   using: "composite"
   steps:
