@@ -6,6 +6,10 @@ branding:
   color: blue
   icon: upload-cloud
 
+outputs:
+  changelog:
+    description: 'Markdown list of changed version'
+
 runs:
   using: 'node16'
   main: 'dist/index.js'

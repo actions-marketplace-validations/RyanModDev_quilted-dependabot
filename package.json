@@ -1,6 +1,6 @@
 {
   "name": "quilted-dependabot",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "repository": "https://github.com/RyanModDev/quilted-dependabot.git",
   "author": "Ryan Cao <70191398+ryanccn@users.noreply.github.com>",
   "license": "MIT",
@@ -9,6 +9,7 @@
     "build": "esbuild index.ts --bundle --minify --platform=node --target=node16 --outdir=dist"
   },
   "dependencies": {
+    "@actions/core": "^1.9.1",
     "@actions/exec": "^1.1.1",
     "@actions/http-client": "^2.0.1",
     "@iarna/toml": "^2.2.5",
