@@ -10,3 +10,8 @@ Updates `gradle/libs.version.toml` for Quilt Loader, Quilt Mappings, and QFAPI!
 - name: Quilted Dependabot
   uses: RyanModDev/quilted-dependabot@v0
 ```
+
+### Outputs
+
+- `changelog`: a Markdown list of the updated dependencies. You can use this to
+  create a PR, for instance.
