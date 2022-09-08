@@ -1,5 +1,5 @@
-import { got } from "got";
-import { XMLParser } from "fast-xml-parser";
+import { got } from 'got';
+import { XMLParser } from 'fast-xml-parser';
 
 type MappingsResponse = {
   gameVersion: string;
@@ -11,9 +11,9 @@ type MappingsResponse = {
 }[];
 
 export const getMappings = async (v: string) => {
-  const res = await got(
-    "https://meta.quiltmc.org/v3/versions/quilt-mappings/" + v,
-  ).json() as MappingsResponse;
+  const res = (await got(
+    'https://meta.quiltmc.org/v3/versions/quilt-mappings/' + v
+  ).json()) as MappingsResponse;
 
   const a = res[0];
 
@@ -30,8 +30,9 @@ type LoaderResponse = {
 }[];
 
 export const getLoader = async (v: string) => {
-  const res = await got("https://meta.quiltmc.org/v3/versions/loader/" + v)
-    .json() as LoaderResponse;
+  const res = (await got(
+    'https://meta.quiltmc.org/v3/versions/loader/' + v
+  ).json()) as LoaderResponse;
 
   const a = res[0];
 
@@ -48,16 +49,22 @@ interface MavenXML {
   };
 }
 
-export const getQFAPI = async (v: string) => {
+const getMaven = async (v: string) => {
   const res = await got(
-    "https://maven.quiltmc.org/repository/release/org/quiltmc/quilted-fabric-api/quilted-fabric-api/maven-metadata.xml",
+    'https://maven.quiltmc.org/repository/release/' +
+      v.split(/[:.]/).join('/') +
+      '/maven-metadata.xml'
   ).text();
 
   const mavenxml = new XMLParser().parse(res) as unknown as MavenXML;
 
-  const goodVersions = mavenxml.metadata.versioning.versions.version.filter(
-    (a) => a.includes("-" + v),
-  );
+  return mavenxml.metadata.versioning.versions.version;
+};
+
+export const getQFAPI = async (v: string) => {
+  const goodVersions = await getMaven(
+    'org.quiltmc.quilted-fabric-api:quilted-fabric-api'
+  ).then((a) => a.filter((a) => a.includes('-' + v)));
 
   return goodVersions[0];
 };
