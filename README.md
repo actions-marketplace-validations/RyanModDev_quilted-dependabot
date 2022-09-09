@@ -2,7 +2,13 @@
 
 > Update certain dependencies for Quilt
 
-Updates `gradle/libs.version.toml` for Quilt Loader, Quilt Mappings, and QFAPI!
+Updates `gradle/libs.version.toml` for several Quilt (and Fabric) related dependencies!
+
+- Quilt Loader
+- Quilt Mappings
+- QFAPI
+- Mod Menu
+- Cloth Config
 
 ## Use this action
 

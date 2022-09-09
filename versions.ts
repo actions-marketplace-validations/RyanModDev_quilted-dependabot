@@ -49,11 +49,9 @@ interface MavenXML {
   };
 }
 
-const getMaven = async (v: string) => {
+export const getMaven = async (identifier: string, maven: string) => {
   const res = await got(
-    'https://maven.quiltmc.org/repository/release/' +
-      v.split(/[:.]/).join('/') +
-      '/maven-metadata.xml'
+    maven + identifier.split(/[:.]/).join('/') + '/maven-metadata.xml'
   ).text();
 
   const mavenxml = new XMLParser().parse(res) as unknown as MavenXML;
@@ -63,8 +61,27 @@ const getMaven = async (v: string) => {
 
 export const getQFAPI = async (v: string) => {
   const goodVersions = await getMaven(
-    'org.quiltmc.quilted-fabric-api:quilted-fabric-api'
+    'org.quiltmc.quilted-fabric-api:quilted-fabric-api',
+    'https://maven.quiltmc.org/repository/release/'
   ).then((a) => a.filter((a) => a.includes('-' + v)));
 
   return goodVersions[0];
+};
+
+export const getModMenu = async () => {
+  const versions = await getMaven(
+    'com.terraformersmc:modmenu',
+    'https://maven.terraformersmc.com/releases/'
+  );
+
+  return versions[0];
+};
+
+export const getClothConfig = async () => {
+  const versions = await getMaven(
+    'me.shedaniel.cloth:cloth-config-fabric',
+    'https://maven.shedaniel.me/'
+  );
+
+  return versions[0];
 };
