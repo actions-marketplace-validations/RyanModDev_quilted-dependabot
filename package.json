@@ -9,7 +9,7 @@
     "build": "esbuild index.ts --bundle --minify --platform=node --target=node16 --outdir=dist"
   },
   "dependencies": {
-    "@actions/core": "^1.9.1",
+    "@actions/core": "^1.10.0",
     "@actions/exec": "^1.1.1",
     "@actions/http-client": "^2.0.1",
     "@iarna/toml": "^2.2.5",
